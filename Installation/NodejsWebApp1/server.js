@@ -1,8 +1,18 @@
 'use strict';
-var http = require('http');
-var port = process.env.PORT || 1337;
 
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello World\n');
-}).listen(port);
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const port = process.env.PORT || 1337;
+
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'src')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'client', 'src', 'Services.html'));
+});
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
